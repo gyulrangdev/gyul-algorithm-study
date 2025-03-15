@@ -1,5 +1,5 @@
 {
-  "name": "2024-algorithm-study",
+  "name": "algorithm-study",
   "module": "index.ts",
   "type": "module",
   "devDependencies": {

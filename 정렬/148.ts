@@ -86,3 +86,30 @@ function merge(l1: ListNode | null, l2: ListNode | null): ListNode | null {
 
 const list = new ListNode(4, new ListNode(2, new ListNode(1, new ListNode(3))));
 console.log(sortList(list));
+
+// 테스트를 위한 헬퍼 함수 추가
+export function listToArray(head: ListNode | null): number[] {
+  const result: number[] = [];
+  let current = head;
+  while (current !== null) {
+    result.push(current.val);
+    current = current.next;
+  }
+  return result;
+}
+
+// 테스트를 위한 배열을 리스트로 변환하는 함수
+export function arrayToList(arr: number[]): ListNode | null {
+  if (arr.length === 0) return null;
+  const dummy = new ListNode(0);
+  let current = dummy;
+
+  for (const val of arr) {
+    current.next = new ListNode(val);
+    current = current.next;
+  }
+
+  return dummy.next;
+}
+
+export { ListNode, sortList };

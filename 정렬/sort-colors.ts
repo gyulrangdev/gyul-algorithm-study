@@ -7,25 +7,33 @@
  *
  * @param nums - 0, 1, 2로 이루어진 배열
  */
-export function sortColors(nums: number[]): void {
-  // 세 개의 포인터를 사용하는 Dutch national flag algorithm
-  let low = 0; // 0을 놓을 위치 (0의 오른쪽 경계)
-  let mid = 0; // 현재 검사 중인 위치
-  let high = nums.length - 1; // 2를 놓을 위치 (2의 왼쪽 경계)
 
-  // mid 포인터가 high 포인터를 넘어가면 종료
+function sortColors1(nums: number[]): void {
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = 0; j < nums.length; j++) {
+      if (nums[j] > nums[j + 1]) {
+        let temp = nums[j];
+        nums[j] = nums[j + 1];
+        nums[j + 1] = temp;
+      }
+    }
+  }
+}
+
+// 세 개의 포인터를 사용하는 Dutch national flag algorithm
+export function sortColors(nums: number[]): void {
+  let low = 0;
+  let mid = 0;
+  let high = nums.length - 1;
+
   while (mid <= high) {
     if (nums[mid] === 0) {
-      // 0을 발견하면 low 위치와 교환하고 두 포인터 모두 전진
       [nums[low], nums[mid]] = [nums[mid], nums[low]];
       low++;
       mid++;
     } else if (nums[mid] === 1) {
-      // 1을 발견하면 그대로 두고 mid 포인터만 전진
       mid++;
     } else if (nums[mid] === 2) {
-      // 2를 발견하면 high 위치와 교환하고 high 포인터만 후진
-      // mid는 증가시키지 않음 (교환된 값이 0 또는 1일 수 있어 다시 검사 필요)
       [nums[mid], nums[high]] = [nums[high], nums[mid]];
       high--;
     }

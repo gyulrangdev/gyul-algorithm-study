@@ -124,5 +124,4 @@ testCases.forEach((prices, index) => {
   console.log(`카데인 알고리즘: ${maxProfitKadane(prices)}`);
 });
 
-// 메인 솔루션 (가장 직관적이고 효율적)
 export default maxProfit;

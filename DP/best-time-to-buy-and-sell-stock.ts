@@ -43,12 +43,14 @@ function maxProfitSlidingWindow(prices: number[]): number {
 
   let left = 0; // 구매 포인터
   let right = 1; // 판매 포인터
-  let maxProfit = 0;
+  let maxProfit = 0; // 5
 
   while (right < prices.length) {
-    // 현재 이익 계산
-    const currentProfit = prices[right] - prices[left];
-
+ // 현재 이익 계산
+  const currentProfit = prices[right] - prices[left];
+  // [7, 1, 5, 3, 6, 4]
+  //l    <
+  //r                <
     if (currentProfit > 0) {
       // 이익이 있으면 최대값 업데이트
       maxProfit = Math.max(maxProfit, currentProfit);
@@ -56,7 +58,7 @@ function maxProfitSlidingWindow(prices: number[]): number {
       // 손실이면 새로운 시작점으로 이동
       left = right;
     }
-
+    
     right++;
   }
 
@@ -67,21 +69,37 @@ function maxProfitSlidingWindow(prices: number[]): number {
  * 접근법 3: 카데인 알고리즘 (Kadane's Algorithm) 변형
  * - 연속된 차이값의 최대 부분 배열 합을 구하는 문제로 변환
  */
+// [7, 1, 5, 3, 6, 4]
 function maxProfitKadane(prices: number[]): number {
   if (prices.length <= 1) return 0;
 
   let maxCurrent = 0; // 현재까지의 최대 이익
   let maxGlobal = 0; // 전체 최대 이익
 
-  for (let i = 1; i < prices.length; i++) {
+  for (let i = 1; i < prices.length; i++) { 
     // 전날 대비 가격 변화
-    const dailyProfit = prices[i] - prices[i - 1];
-
+    const dailyProfit = prices[i] - prices[i - 1]; 
+    // i = 1 : 1 - 7 = -6
+    // i = 2 : 5 - 1 = 4
+    // i = 3 : 3 - 5 = -2
+    // i = 4 : 6 - 3 = 3
+    // i = 5 : 4 - 6 = -2
+    
     // 현재까지의 최대 이익 계산
-    maxCurrent = Math.max(dailyProfit, maxCurrent + dailyProfit);
-
+    maxCurrent = Math.max(dailyProfit, maxCurrent + dailyProfit); 
+    // i = 1 : -6, 0 - 6 : maxCurrent -6
+    // i = 2 : 4, -6 + 4 : maxCurrent 4
+    // i = 3 : -2, 4 -2 : maxCurrent 2
+    // i = 4 : 3, 2 + 3 : maxCurrent 5
+    // i = 5 : -2, 5 - 2 : maxCurrent 3
+    
     // 전체 최대 이익 업데이트
     maxGlobal = Math.max(maxGlobal, maxCurrent);
+    // i = 1 : 0 , -6 : maxGlobal = 0
+    // i = 2 : 0, 4 : maxGlobal = 4
+    // i = 3 : 4, 2 : maxGLobal = 4
+    // i = 4 : 4, 5 : maxGlobal = 5
+    // i = 5 : 5, 3 : maxGlobal = 5
   }
 
   return maxGlobal;
